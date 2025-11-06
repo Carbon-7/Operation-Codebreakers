@@ -1,0 +1,16 @@
+{
+  "name": "operation-codebreaker",
+  "version": "1.0.0",
+  "description": "A thrilling web-based programming game where players race against time to prevent a nuclear launch by fixing malicious code. Perfect for tech enthusiasts and aspiring programmers!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7"
+  }
+}

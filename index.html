@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Operation Codebreaker | Cyber Security Challenge</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/terminal.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-rain"></canvas>
+    
+    <!-- Particles Effect -->
+    <div id="particles-js"></div>
+    
+    <!-- Main Game Container -->
+    <div class="game-container">
+        <!-- Game HUD -->
+        <div class="game-hud">
+            <div class="hud-item timer-container">
+                <div class="timer" id="timer">
+                    <span id="minutes">05</span>:<span id="seconds">00</span>
+                </div>
+                <div class="warning-text blink">NUCLEAR LAUNCH IMMINENT</div>
+            </div>
+            
+            <div class="hud-item stats-container">
+                <div class="stat score">SCORE: <span id="score">0</span></div>
+                <div class="stat level">LEVEL: <span id="level">1</span></div>
+            </div>
+        </div>
+
+        <!-- Main Terminal Interface -->
+        <div class="terminal-interface">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="terminal-title">NSA EMERGENCY OVERRIDE TERMINAL</div>
+                </div>
+                
+                <div class="terminal-content">
+                    <!-- Challenge Description -->
+                    <div class="challenge-section">
+                        <div id="challenge-description" class="challenge-description cyber-text">
+                            // Awaiting mission start...
+                        </div>
+                    </div>
+                    
+                    <!-- Code Editor -->
+                    <div class="editor-section">
+                        <div id="code-editor" class="code-editor" contenteditable="true">
+                            // Initializing system...
+                        </div>
+                    </div>
+                    
+                    <!-- Command Input -->
+                    <div class="command-section">
+                        <div class="command-prompt">
+                            <span class="prompt-symbol">></span>
+                            <input type="text" 
+                                   id="solution-input" 
+                                   class="command-input" 
+                                   placeholder="Enter solution code..."
+                                   autocomplete="off"
+                                   spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Screen Overlay -->
+        <div id="start-screen" class="game-overlay active">
+            <div class="overlay-content">
+                <h1 class="cyber-title glitch" data-text="OPERATION CODEBREAKER">OPERATION CODEBREAKER</h1>
+                <div class="mission-brief">
+                    <p class="cyber-text">CRITICAL ALERT: Nuclear launch systems compromised!</p>
+                    <p class="cyber-text">Your mission: Debug the infected code before detonation.</p>
+                    <p class="cyber-text blink">Time is running out...</p>
+                </div>
+                <button id="start-button" 
+                        class="cyber-button" 
+                        type="button">
+                    <span class="button-text">INITIALIZE MISSION</span>
+                    <span class="button-glitch"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Game Initialization -->
+    <script>
+        // Track loaded modules
+        const loadedModules = new Set();
+        
+        // Function to check if all required modules are loaded
+        function checkModulesLoaded() {
+            const requiredModules = ['Terminal', 'Challenges', 'Timer', 'Game'];
+            return requiredModules.every(module => loadedModules.has(module));
+        }
+
+        // Function to initialize game when all modules are loaded
+        function initializeGame() {
+            if (checkModulesLoaded()) {
+                console.log('✨ All systems operational');
+                // Initialize game instance
+                window.game = new Game();
+                // Add click handler after game is initialized
+                document.getElementById('start-button').addEventListener('click', () => {
+                    window.game.startGame();
+                });
+            } else {
+                console.error('🚨 System initialization failed');
+                alert('Critical error: Some game components failed to load. Please refresh the page.');
+            }
+        }
+
+        // Module loaded callback
+        function moduleLoaded(moduleName) {
+            console.log(`✅ ${moduleName} module loaded`);
+            loadedModules.add(moduleName);
+            if (checkModulesLoaded()) {
+                initializeGame();
+            }
+        }
+
+        // Error handler for script loading
+        function handleScriptError(scriptName) {
+            console.error(`❌ Failed to load ${scriptName}`);
+            alert(`Critical error: Failed to load ${scriptName}. Please refresh the page.`);
+        }
+    </script>
+
+    <!-- Load game scripts with error handling -->
+    <script src="js/terminal.js" 
+            onload="moduleLoaded('Terminal')" 
+            onerror="handleScriptError('terminal.js')"></script>
+    <script src="js/challenges.js" 
+            onload="moduleLoaded('Challenges')" 
+            onerror="handleScriptError('challenges.js')"></script>
+    <script src="js/timer.js" 
+            onload="moduleLoaded('Timer')" 
+            onerror="handleScriptError('timer.js')"></script>
+    <script src="js/game.js" 
+            onload="moduleLoaded('Game')" 
+            onerror="handleScriptError('game.js')"></script>
+</body>
+</html> 

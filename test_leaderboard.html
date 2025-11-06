@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leaderboard Test</h1>
+    
+    <div class="test-section">
+        <h2>Add Test Score</h2>
+        <button onclick="addTestScore()">Add Score</button>
+        <pre id="addResult"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>View Leaderboard</h2>
+        <button onclick="viewLeaderboard()">View Leaderboard</button>
+        <pre id="viewResult"></pre>
+    </div>
+
+    <script>
+        function addTestScore() {
+            const formData = new FormData();
+            formData.append('action', 'save');
+            formData.append('player_name', 'TestPlayer');
+            formData.append('score', 1000);
+            formData.append('completion_time', '04:30');
+            formData.append('levels_completed', 5);
+
+            fetch('leaderboard_handler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('addResult').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('addResult').textContent = 'Error: ' + error;
+            });
+        }
+
+        function viewLeaderboard() {
+            const formData = new FormData();
+            formData.append('action', 'get');
+
+            fetch('leaderboard_handler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('viewResult').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('viewResult').textContent = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html> 
